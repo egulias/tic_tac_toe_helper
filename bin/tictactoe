@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__.'/../vendor/autoload.php';
+
+use \Symfony\Component\Console\Command\Command;
+use \Symfony\Component\Console\Input\InputOption;
+use \Symfony\Component\Console\Output\OutputInterface;
+use \Symfony\Component\Console\Input\InputInterface;
+use \Symfony\Component\Console\Application;
+use \Aferrandini\Console\Helper\TicTacToeHelper;
+use \Aferrandini\Console\Exception\PlayAlreadyPlayedException;
+
+$playCommand = new Command('play');
+$playCommand->setDescription('This is a command line app which final purpose is to show how to use TicTacToeHelper');
+$playCommand->addOption('size', 's',  InputOption::VALUE_OPTIONAL, 'Game table size.', 3);
+$playCommand->addOption('no-overwrite', null,  InputOption::VALUE_NONE, 'Do not overwrite the game table.');
+$playCommand->setCode(function (InputInterface $input,  OutputInterface $output) {
+    $tictactoe = new TicTacToeHelper($output, $input->getOption('size'), !$input->getOption('no-overwrite'));
+    $tictactoe->display();
+
+    $minPosition = 0;
+    $maxPosition = $input->getOption('size')-1;
+    $totalGames = $input->getOption('size')*$input->getOption('size');
+    $playedGames = 0;
+    $currentPlayer = 1;
+    while ($playedGames<$totalGames) {
+        try {
+            $x = mt_rand($minPosition, $maxPosition);
+            $y = mt_rand($minPosition, $maxPosition);
+
+            $tictactoe->updateGame($x,$y,$currentPlayer);
+
+            $currentPlayer = (1 == $currentPlayer ? 2 : 1);
+            $playedGames++;
+        } catch (PlayAlreadyPlayedException $e) {
+
+        }
+    }
+});
+
+$application = new Application('TicTacToe', '1.0');
+$application->add($playCommand);
+$application->run();
