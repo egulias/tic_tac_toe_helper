@@ -43,6 +43,7 @@ class TicTacToeHelper
     public function initGame()
     {
         $this->game = array();
+        $this->last_player = null;
 
         for ($x=0; $x<$this->size; $x++) {
             $row = array();
@@ -53,6 +54,8 @@ class TicTacToeHelper
 
             $this->game[] = $row;
         }
+
+        $this->display();
     }
 
     public function display()
