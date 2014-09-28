@@ -118,9 +118,9 @@ class TicTacToeHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException   Aferrandini\Console\Exception\PlayAlreadyPlayedException
+     * @expectedException   Aferrandini\Console\Exception\MoveAlreadyDoneException
      */
-    public function testPlayAlreadyPlayedException()
+    public function testMoveAlreadyPlayedException()
     {
         $ticTacToe = new TicTacToeHelper($output = $this->getOutputStream(false));
         $ticTacToe->updateGame(1, 1, 1);

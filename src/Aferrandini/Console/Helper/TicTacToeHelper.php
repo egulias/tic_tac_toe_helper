@@ -9,7 +9,7 @@
 namespace Aferrandini\Console\Helper;
 
 
-use Aferrandini\Console\Exception\PlayAlreadyPlayedException;
+use Aferrandini\Console\Exception\MoveAlreadyDoneException;
 use Aferrandini\Console\Exception\PlayerNotFoundException;
 use Aferrandini\Console\Exception\PlayerRepeatGameException;
 use Symfony\Component\Console\Helper\Helper;
@@ -105,7 +105,7 @@ class TicTacToeHelper
         }
 
         if (!is_null($this->game[$x][$y])) {
-            throw new PlayAlreadyPlayedException($x, $y, $this->game[$x][$y]);
+            throw new MoveAlreadyDoneException($x, $y, $this->game[$x][$y]);
         }
 
         $this->last_player = $player;
