@@ -37,13 +37,7 @@ class TicTacToeHelper
         $this->output = $output;
         $this->size = $size;
 
-        if (!$this->output->isDecorated()) {
-            // disable overwrite when output does not support ANSI codes.
-            $this->overwrite = false;
-        }
-
         $this->initGame();
-
     }
 
     public function initGame()
